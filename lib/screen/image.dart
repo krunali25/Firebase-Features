@@ -6,10 +6,11 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-
 import '../helper/colors.dart';
 
 class ImageUploads extends StatefulWidget {
+  const ImageUploads({super.key});
+
   @override
   _ImageUploadsState createState() => _ImageUploadsState();
 }
@@ -155,27 +156,25 @@ class _ImageUploadsState extends State<ImageUploads> {
       context: context,
       builder: (BuildContext bc) {
         return SafeArea(
-          child: Container(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text(StringConstants.gallery),
-                  onTap: () {
-                    imgFromGallery();
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text(StringConstants.camera),
-                  onTap: () {
-                    imgFromCamera();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text(StringConstants.gallery),
+                onTap: () {
+                  imgFromGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text(StringConstants.camera),
+                onTap: () {
+                  imgFromCamera();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
         );
       },
