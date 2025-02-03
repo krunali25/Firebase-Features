@@ -73,7 +73,7 @@ class AppTextField extends StatelessWidget {
             ? Text(
                 titleText,
                 style: TextStyle(
-                  fontSize: Dimens.fontSize_12,
+                  fontSize: Dimens.fontSize_16,
                   fontFamily: Fonts.semibold,
                   color: whiteColor,
                 ),

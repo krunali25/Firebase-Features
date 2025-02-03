@@ -1,13 +1,13 @@
+
 import 'package:firebase_features/screen/crashlytics.dart';
-import 'package:firebase_features/screen/home.dart';
 import 'package:firebase_features/screen/image.dart';
 import 'package:firebase_features/screen/main_screen.dart';
 import 'package:firebase_features/screen/firestore.dart';
+import 'package:firebase_features/screen/remote_config.dart';
 import 'package:firebase_features/screen/signin_screen.dart';
 import 'package:firebase_features/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import 'navigation.dart';
 
 class RoutesUri {
@@ -18,11 +18,16 @@ class RoutesUri {
   static const String fireStore = '/firestore';
   static const String crush = '/crashlytics';
   static const String image = '/image';
+  static const String remoteConfig = '/remote_config';
+  static const String userList= '/usre_list';
+
+  
 }
 
 //const List<String> unrestrictedRoutes = [RoutesUri.main];
 
 const List<String> publicRoutes = [];
+
 
 GoRouter appRouter() {
   return GoRouter(
@@ -43,7 +48,7 @@ GoRouter appRouter() {
             return FadeTransition(opacity: animation, child: child);
           },
           key: state.pageKey,
-          child: const SignupScreen(),
+          child: SignupScreen(),
         ),
       ),
       GoRoute(
@@ -53,19 +58,19 @@ GoRouter appRouter() {
             return FadeTransition(opacity: animation, child: child);
           },
           key: state.pageKey,
-          child: const SigninScreen(),
+          child: LoginScreen(),
         ),
       ),
-      GoRoute(
-        path: RoutesUri.home,
-        pageBuilder: (context, state) => CustomTransitionPage(
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          key: state.pageKey,
-          child: const HomeScreen(),
-        ),
-      ),
+      // GoRoute(
+      //   path: RoutesUri.home,
+      //   pageBuilder: (context, state) => CustomTransitionPage(
+      //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //       return FadeTransition(opacity: animation, child: child);
+      //     },
+      //     key: state.pageKey,
+      //     child: const HomeScreen(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutesUri.fireStore,
         pageBuilder: (context, state) => CustomTransitionPage(
@@ -96,6 +101,26 @@ GoRouter appRouter() {
           child: ImageUploads(),
         ),
       ),
+      GoRoute(
+        path: RoutesUri.remoteConfig,
+        pageBuilder: (context, state) => CustomTransitionPage(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          key: state.pageKey,
+          child: RemoteConfigScreen(),
+        ),
+      ),
+      // GoRoute(
+      //   path: RoutesUri.userList,
+      //   pageBuilder: (context, state) => CustomTransitionPage(
+      //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //       return FadeTransition(opacity: animation, child: child);
+      //     },
+      //     key: state.pageKey,
+      //     child: UserListScreen(),
+      //   ),
+      // ),
     ],
     redirect: (context, state) async {
       // String isLoggedIn = await AppStorage.getValue(AppStorageConstants.isLoggedIn);

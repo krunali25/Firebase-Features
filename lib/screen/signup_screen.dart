@@ -1,159 +1,189 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_features/helper/app_assets.dart';
-import 'package:firebase_features/widgets/app_button.dart';
-import 'package:firebase_features/widgets/background.dart';
+import 'package:firebase_features/helper/colors.dart';
+import 'package:firebase_features/screen/signin_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../helper/colors.dart';
+import 'package:image_picker/image_picker.dart';
+import '../helper/app_assets.dart';
+import '../helper/authentication.dart';
 import '../helper/dimens.dart';
-import '../helper/navigation.dart';
-import '../helper/routes.dart';
+import '../widgets/app_button.dart';
+import 'converastion_list.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
-
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _cpasswordController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  File? _profileImage;
 
-  Future<void> registerUser() async {
-    final String email = _emailController.text.trim();
-    final String password = _passwordController.text.trim();
-    final String confirmPassword = _cpasswordController.text.trim();
-    final String name = _nameController.text.trim();
+  final ImagePicker _picker = ImagePicker();
 
-    // Validation checks
-    if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      _showAlertDialog("Error", "Please fill in all fields.");
-      return;
+  // Function to pick an image
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
     }
-
-    if (password != confirmPassword) {
-      _showAlertDialog("Error", "Passwords do not match.");
-      return;
-    }
-
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      // Optionally set the display name
-      await userCredential.user?.updateDisplayName(name);
-
-      // Navigate to the home page on success
-      _showAlertDialog("Success", "Registration successful!");
-      GoRouter.of(NavigationService.context!).go(RoutesUri.home);
-    } on FirebaseAuthException catch (e) {
-      _showAlertDialog("Error", e.message ?? "An error occurred.");
-    } catch (e) {
-      _showAlertDialog("Error", "An unexpected error occurred: $e");
-    }
-  }
-
-  // Helper method to show an alert dialog
-  void _showAlertDialog(String title, String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      body: Column(
-        children: [
-          const Background(),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Text(
-                  StringConstants.register, // Replace with `StringConstants.register` if defined
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontSize: Dimens.fontSize_25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextField(
-                  controller: _nameController,
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontSize: Dimens.fontSize_12,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Name", // Replace with `StringConstants.name` if defined
-                    labelStyle: TextStyle(color: whiteColor),
-                  ),
-                ),
-                TextField(
-                  controller: _emailController,
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontSize: Dimens.fontSize_12,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Email", // Replace with `StringConstants.email` if defined
-                    labelStyle: TextStyle(color: whiteColor),
-                  ),
-                ),
-                TextField(
-                  controller: _passwordController,
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontSize: Dimens.fontSize_12,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Password", // Replace with `StringConstants.password` if defined
-                    labelStyle: TextStyle(color: whiteColor),
-                  ),
-                  obscureText: true,
-                ),
-                TextField(
-                  controller: _cpasswordController,
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontSize: Dimens.fontSize_12,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: "Confirm Password", // Replace with `StringConstants.cPassword` if defined
-                    labelStyle: TextStyle(color: whiteColor),
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 20),
-                AppButton(
-                  label: "Sign Up", // Replace with `StringConstants.signup` if defined
-                  onPressed: registerUser,
-                ),
-              ],
-            ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: whiteColor,
           ),
-        ],
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          StringConstants.signup,
+          style: TextStyle(
+            color: whiteColor,
+            fontSize: Dimens.fontSize_25,
+            fontFamily: Fonts.pSemibold,
+          ),
+        ),
+        backgroundColor: primaryColor,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Profile Image Section
+              GestureDetector(
+                onTap: _pickImage,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _profileImage != null
+                      ? FileImage(_profileImage!)
+                      : AssetImage(AppImages.defultProfile) as ImageProvider,
+                  child: _profileImage == null
+                      ? Icon(
+                    Icons.add_a_photo,
+                    color: Colors.white,
+                    size: 30,
+                  )
+                      : null,
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: nameController,
+                style: TextStyle(
+                  color: whiteColor, // Set the text color here
+                  fontSize: 16.0,    // Optional: Set the text size
+                ),
+                decoration: InputDecoration(
+                  labelText: StringConstants.displayName,
+                  labelStyle: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16.0,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: whiteColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              TextField(
+                controller: emailController,
+                style: TextStyle(
+                  color: whiteColor, // Set the text color here
+                  fontSize: 16.0,    // Optional: Set the text size
+                ),
+                decoration: InputDecoration(
+                  labelText: StringConstants.email,
+                  labelStyle: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16.0,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: whiteColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              TextField(
+                controller: passwordController,
+                style: TextStyle(
+                  color: whiteColor, // Set the text color here
+                  fontSize: 16.0,    // Optional: Set the text size
+                ),
+                decoration: InputDecoration(
+                  labelText: StringConstants.password,
+                  labelStyle: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16.0,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: whiteColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 20),
+              AppButton(
+                label: StringConstants.signup,
+                onPressed: () async {
+                  String name = nameController.text.trim();
+                  String email = emailController.text.trim();
+                  String password = passwordController.text.trim();
+
+                  if (_profileImage == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Please select a profile image.")),
+                    );
+                    return;
+                  }
+
+                  User? user = await AuthService().signUp(email, password, name, _profileImage);
+                  if (user != null) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,12 +1,15 @@
 import 'package:firebase_features/helper/app_assets.dart';
 import 'package:firebase_features/helper/colors.dart';
+import 'package:firebase_features/screen/cake_screen.dart';
+import 'package:firebase_features/screen/firestore.dart';
+import 'package:firebase_features/screen/image.dart';
+import 'package:firebase_features/screen/remote_config.dart';
 import 'package:firebase_features/screen/signin_screen.dart';
 import 'package:firebase_features/widgets/background.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../helper/navigation.dart';
-import '../helper/routes.dart';
+
 import '../widgets/app_button.dart';
+import 'crashlytics.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -33,7 +36,10 @@ class _MainScreenState extends State<MainScreen> {
             AppButton(
                 label: StringConstants.auth,
                 onPressed: () {
-                  GoRouter.of(NavigationService.context!).go(RoutesUri.signIn);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
                 }),
             SizedBox(
               height: 20,
@@ -41,7 +47,10 @@ class _MainScreenState extends State<MainScreen> {
             AppButton(
                 label: StringConstants.fireStore,
                 onPressed: () {
-                  GoRouter.of(NavigationService.context!).go(RoutesUri.fireStore);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FirestoreScreen()),
+                  );
                 }),
             SizedBox(
               height: 20,
@@ -49,7 +58,10 @@ class _MainScreenState extends State<MainScreen> {
             AppButton(
                 label: StringConstants.crashlytics,
                 onPressed: () {
-                  GoRouter.of(NavigationService.context!).go(RoutesUri.crush);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CrashlyticsScreen()),
+                  );
                 }),
             SizedBox(
               height: 20,
@@ -57,7 +69,32 @@ class _MainScreenState extends State<MainScreen> {
             AppButton(
                 label: StringConstants.image,
                 onPressed: () {
-                  GoRouter.of(NavigationService.context!).go(RoutesUri.image);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ImageUploads()),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            AppButton(
+                label: StringConstants.abTesting,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RemoteConfigScreen()),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            AppButton(
+                label: StringConstants.cake,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CakeScreen()),
+                  );
                 }),
           ],
         ),

@@ -31,3 +31,6 @@ const Color imageContainer =Color(0x1AF3F3F3);
 const Color imageBackground =Color(0xFF727272);
 const Color sepratorColor =Color(0xff3B3B3B);
 const Color inactiveIconColor =Color(0xff848484);
+const Color chatColor =Color(0xff5484e6);
+const Color chatColor1 =Color(0xfffa9ebc);
+
