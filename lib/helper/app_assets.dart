@@ -53,8 +53,8 @@ class StringConstants{
   static const String cake = "Cake List";
   static const String difficulty = "Difficulty Level : ";
   static const String portion = "Portion : ";
-
-
-
+  static const String restaurant = "Restaurant";
+  static const String holiday = "Holiday";
+  static const String job = "Job";
 
 }

@@ -2,8 +2,11 @@ import 'package:firebase_features/helper/app_assets.dart';
 import 'package:firebase_features/helper/colors.dart';
 import 'package:firebase_features/screen/cake_screen.dart';
 import 'package:firebase_features/screen/firestore.dart';
+import 'package:firebase_features/screen/holiday_screen.dart';
 import 'package:firebase_features/screen/image.dart';
+import 'package:firebase_features/screen/job_screen.dart';
 import 'package:firebase_features/screen/remote_config.dart';
+import 'package:firebase_features/screen/restaurant.dart';
 import 'package:firebase_features/screen/signin_screen.dart';
 import 'package:firebase_features/widgets/background.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +97,39 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CakeScreen()),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            AppButton(
+                label: StringConstants.restaurant,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RestaurantScreen()),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            AppButton(
+                label: StringConstants.holiday,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HolidayScreen()),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            AppButton(
+                label: StringConstants.job,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => JobScreen()),
                   );
                 }),
           ],

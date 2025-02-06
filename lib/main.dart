@@ -4,7 +4,12 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_features/model/country_name_model.dart';
+import 'package:firebase_features/model/restaurant_name_model.dart';
 import 'package:firebase_features/provider/cake_provider.dart';
+import 'package:firebase_features/provider/holiday_provider.dart';
+import 'package:firebase_features/provider/job_provider.dart';
+import 'package:firebase_features/provider/restaurant_provider.dart';
 import 'package:firebase_features/screen/user_list.dart';
 import 'package:firebase_features/screen/firebase_messaging_service.dart';
 import 'package:firebase_features/screen/converastion_list.dart';
@@ -40,6 +45,9 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<CakeProvider>(create: (_) => CakeProvider(),),
+    ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(),),
+    ChangeNotifierProvider<HolidayProvider>(create: (_) => HolidayProvider(),),
+    ChangeNotifierProvider<JobProvider>(create: (_) => JobProvider(),),
   ],child:MyApp()));
 }
 
