@@ -10,6 +10,7 @@ import 'package:firebase_features/provider/cake_provider.dart';
 import 'package:firebase_features/provider/holiday_provider.dart';
 import 'package:firebase_features/provider/job_provider.dart';
 import 'package:firebase_features/provider/restaurant_provider.dart';
+import 'package:firebase_features/provider/video_provider.dart';
 import 'package:firebase_features/screen/user_list.dart';
 import 'package:firebase_features/screen/firebase_messaging_service.dart';
 import 'package:firebase_features/screen/converastion_list.dart';
@@ -47,7 +48,9 @@ void main() async {
     ChangeNotifierProvider<CakeProvider>(create: (_) => CakeProvider(),),
     ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(),),
     ChangeNotifierProvider<HolidayProvider>(create: (_) => HolidayProvider(),),
-    ChangeNotifierProvider<JobProvider>(create: (_) => JobProvider(),),
+    ChangeNotifierProvider(create: (_) => JobProvider()),
+    ChangeNotifierProvider<VideoProvider>(create: (_) => VideoProvider(),),
+
   ],child:MyApp()));
 }
 

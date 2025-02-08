@@ -1,68 +1,52 @@
-import 'package:firebase_features/model/job_detail_model.dart';
-import 'package:firebase_features/repository/job_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../model/job_detail_model.dart';
+import '../repository/job_repository.dart';
+
+JobProvider getJobStore(BuildContext context) {
+  return Provider.of<JobProvider>(context, listen: false);
+}
 
 class JobProvider extends ChangeNotifier {
   final JobRepository jobRepository = JobRepository();
-  bool _isLoading = false;
-  JobDetail? _jobDetail;
+  bool isLoading = false;
+  JobDetail? jobDetail;
+  List<JobDetail> jobList = [];
+  List<JobDetail> filteredJobList = [];
+  String? selectedCity;
 
-  bool get isLoading => _isLoading;
-  JobDetail? get jobDetail => _jobDetail;
-
-  void changeLoading(bool val) {
-    _isLoading = val;
+  changeLoading(bool val) {
+    isLoading = val;
     notifyListeners();
   }
 
-  Future<void> getAllJob() async {
-    try {
-      changeLoading(true);
+  getAllJob() async {
+    changeLoading(true);
+    Response response = await jobRepository.getAllJob();
+    List<JobDetail> tmpList = [];
+    print("response.data['data'] : ${response.data['data']}");
 
-      Response response = await jobRepository.getAllJob();
-      print('Response Data: ${response.data}');
+    response.data['data'].forEach((element) {
+      tmpList.add(JobDetail.fromJson(element));
+    });
 
-      // Check for successful response
-      if (response.statusCode == 200) {
-        List<Datum> tmpList = [];
+    jobList = tmpList;
+    filteredJobList = List.from(jobList); // Initially, show all jobs
 
-        // Ensure the "data" key exists and contains a list
-        if (response.data["data"] != null && response.data["data"] is List) {
-          for (var element in response.data["data"]) {
-            tmpList.add(Datum.fromJson(element));
-          }
-        } else {
-          print("Error: 'data' field is missing or not an array.");
-        }
-
-        // Map the job details
-        _jobDetail = JobDetail(
-          status: response.data["status"],
-          requestId: response.data["request_id"],
-          parameters: Parameters.fromJson(response.data["parameters"]),
-          data: tmpList,
-        );
-
-        notifyListeners();
-      } else {
-        print("Failed to fetch job. Status Code: ${response.statusCode}");
-      }
-    } catch (error) {
-      print("Error fetching job: $error");
-    } finally {
-      changeLoading(false);
-    }
+    notifyListeners();
+    print("jobList : ${jobList.length}");
+    changeLoading(false);
   }
 
-  List<Map<String, String>> get jobDetailsList {
-    if (_jobDetail == null) return [];
-    return _jobDetail!.data.map((datum) {
-      return {
-        'jobTitle': datum.jobTitle,
-        'jobPublisher': datum.jobPublisher.toString(),
-        'jobDescription': datum.jobDescription,
-      };
-    }).toList();
+  void filterJobs(String? city) {
+    selectedCity = city;
+    if (city == null) {
+      filteredJobList = List.from(jobList);
+    } else {
+      filteredJobList = jobList.where((job) => job.jobLocation == city).toList();
+    }
+    notifyListeners();
   }
 }

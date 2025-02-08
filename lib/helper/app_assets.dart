@@ -56,5 +56,6 @@ class StringConstants{
   static const String restaurant = "Restaurant";
   static const String holiday = "Holiday";
   static const String job = "Job";
+  static const String video = "Video";
 
 }
