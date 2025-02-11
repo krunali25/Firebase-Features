@@ -1,39 +1,33 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_features/model/video_model.dart';
-import 'package:firebase_features/repository/video_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import '../model/video_model.dart';
+import '../repository/video_repository.dart';
 
-import '../model/cake_model.dart';
-import '../repository/cake_repository.dart';
-
-VideoProvider getVideoStore(BuildContext context) {
-  return Provider.of<VideoProvider>(context, listen: false);
-}
 class VideoProvider extends ChangeNotifier {
-  VideoRepository videoRepository = VideoRepository();
+  final VideoRepository _videoRepository = VideoRepository();
   bool isLoading = false;
+  List<Video> _videos = [];
 
-  List<Video> videoList = [];
-  changeLoading(bool val) {
+  List<Video> get videos => _videos;
+
+  void changeLoading(bool val) {
     isLoading = val;
     notifyListeners();
   }
 
-  getAllVideo() async {
+  Future<void> postAllVideo() async {
     changeLoading(true);
-    Response response = await videoRepository.getAllVideo();
-    print("${response.data}");
-    List<Video> tmpList = [];
-    print("response.data : ${response.data}");
-    response.data.forEach((element) {
-      tmpList.add(Video.fromJson(element));
-    });
-    videoList = tmpList;
-    notifyListeners();
-    print("videoList : ${videoList.length}");
+    try {
+      Response response = await _videoRepository.postAllVideo();
+      print("API Response: ${response.data}");
+
+      // Ensure the response contains a list of videos
+      List<dynamic> jsonData = response.data["medias"] ?? [];
+      _videos = jsonData.map((item) => Video.fromJson(item)).toList();
+    } catch (e) {
+      print("Error fetching videos: $e");
+      _videos = [];
+    }
     changeLoading(false);
   }
-
 }
-

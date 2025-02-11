@@ -1,7 +1,7 @@
 import 'package:firebase_features/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'chat.dart';
+import 'api/chat.dart';
 
 class UserListScreen extends StatelessWidget {
   final String currentUserId;

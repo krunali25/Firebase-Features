@@ -1,14 +1,16 @@
 import 'package:firebase_features/helper/app_assets.dart';
 import 'package:firebase_features/helper/colors.dart';
-import 'package:firebase_features/screen/cake_screen.dart';
+import 'package:firebase_features/screen/api/amazon_data_screen.dart';
+import 'package:firebase_features/screen/api/cake_screen.dart';
+import 'package:firebase_features/screen/api/market_news_screen.dart';
 import 'package:firebase_features/screen/firestore.dart';
-import 'package:firebase_features/screen/holiday_screen.dart';
+import 'package:firebase_features/screen/api/holiday_screen.dart';
 import 'package:firebase_features/screen/image.dart';
-import 'package:firebase_features/screen/job_screen.dart';
+import 'package:firebase_features/screen/api/job_screen.dart';
 import 'package:firebase_features/screen/remote_config.dart';
-import 'package:firebase_features/screen/restaurant.dart';
+import 'package:firebase_features/screen/api/restaurant.dart';
 import 'package:firebase_features/screen/signin_screen.dart';
-import 'package:firebase_features/screen/video_screen.dart';
+import 'package:firebase_features/screen/api/video_screen.dart';
 import 'package:firebase_features/widgets/background.dart';
 import 'package:flutter/material.dart';
 
@@ -145,6 +147,28 @@ class _MainScreenState extends State<MainScreen> {
                       MaterialPageRoute(builder: (context) => VideoScreen()),
                     );
                   }),
+              SizedBox(
+                height: 20,
+              ),
+              AppButton(
+                  label: StringConstants.marketNews,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MarketNewsScreen()),
+                    );
+                  }),SizedBox(
+                height: 20,
+              ),
+              AppButton(
+                  label: StringConstants.amazoneData,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AmazonProductScreen()),
+                    );
+                  }),
+
             ],
           ),
         ),

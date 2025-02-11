@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../helper/colors.dart';
-import '../provider/holiday_provider.dart';
+import '../../helper/colors.dart';
+import '../../provider/holiday_provider.dart';
 
 class HolidayScreen extends StatefulWidget {
   const HolidayScreen({super.key});

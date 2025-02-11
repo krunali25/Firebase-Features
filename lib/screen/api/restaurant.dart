@@ -1,7 +1,7 @@
 import 'package:firebase_features/helper/colors.dart';
 import 'package:flutter/material.dart';import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import '../provider/restaurant_provider.dart';
+import '../../provider/restaurant_provider.dart';
 
 class RestaurantScreen extends StatefulWidget {
   @override

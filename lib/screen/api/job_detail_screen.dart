@@ -2,7 +2,7 @@ import 'package:firebase_features/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../model/job_detail_model.dart';
+import '../../model/job_detail_model.dart';
 
 class JobDetailScreen extends StatelessWidget {
   final JobDetail job;

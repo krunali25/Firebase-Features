@@ -1,5 +1,5 @@
 import 'package:firebase_features/helper/colors.dart';
-import 'package:firebase_features/screen/chat.dart' as chat_screen;
+import 'package:firebase_features/screen/api/chat.dart' as chat_screen;
 import 'package:firebase_features/screen/user_list.dart' as user_list;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -3,7 +3,7 @@ import 'package:firebase_features/helper/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/cake_provider.dart';
+import '../../provider/cake_provider.dart';
 
 class CakeDetailScreen extends StatefulWidget {
   final String cakeId;

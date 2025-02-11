@@ -2,8 +2,8 @@ import 'package:firebase_features/helper/app_assets.dart';
 import 'package:firebase_features/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/job_provider.dart';
-import '../model/job_detail_model.dart';
+import '../../provider/job_provider.dart';
+import '../../model/job_detail_model.dart';
 import 'job_detail_screen.dart';
 
 class JobScreen extends StatefulWidget {

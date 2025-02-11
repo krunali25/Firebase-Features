@@ -57,5 +57,9 @@ class StringConstants{
   static const String holiday = "Holiday";
   static const String job = "Job";
   static const String video = "Video";
+  static const String marketNews = "Market-News";
+  static const String amazoneData = "Amazon Data";
+  static const String amazonProduct = "Amazon Product List";
+  static const String visitBrand = "Visit the Levi's Store";
 
 }

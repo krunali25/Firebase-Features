@@ -4,16 +4,19 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_features/model/amazon_data_model.dart';
 import 'package:firebase_features/model/country_name_model.dart';
 import 'package:firebase_features/model/restaurant_name_model.dart';
+import 'package:firebase_features/provider/amazon_data_provider.dart';
 import 'package:firebase_features/provider/cake_provider.dart';
 import 'package:firebase_features/provider/holiday_provider.dart';
 import 'package:firebase_features/provider/job_provider.dart';
+import 'package:firebase_features/provider/market_news_provider.dart';
 import 'package:firebase_features/provider/restaurant_provider.dart';
 import 'package:firebase_features/provider/video_provider.dart';
 import 'package:firebase_features/screen/user_list.dart';
 import 'package:firebase_features/screen/firebase_messaging_service.dart';
-import 'package:firebase_features/screen/converastion_list.dart';
+import 'package:firebase_features/screen/api/converastion_list.dart';
 import 'package:firebase_features/screen/main_screen.dart';
 import 'package:firebase_features/screen/signin_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -50,6 +53,8 @@ void main() async {
     ChangeNotifierProvider<HolidayProvider>(create: (_) => HolidayProvider(),),
     ChangeNotifierProvider(create: (_) => JobProvider()),
     ChangeNotifierProvider<VideoProvider>(create: (_) => VideoProvider(),),
+    ChangeNotifierProvider<NewsProvider>(create: (_) => NewsProvider(),),
+    ChangeNotifierProvider<AmazonDataProvider>(create: (_) => AmazonDataProvider(),),
 
   ],child:MyApp()));
 }
